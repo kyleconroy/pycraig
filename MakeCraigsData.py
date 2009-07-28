@@ -1,22 +1,57 @@
 import re, urllib, string
 from BeautifulSoup import BeautifulSoup
 
-q = "hhh/"
+
 
 def scrape(url):
     f = urllib.urlopen(url)
     html = f.read()
     return BeautifulSoup(html)
 
+def getSections():
+    url = "http://sfbay.craigslist.org/"
+    categories = {"Community" : {"url": "ccc"},
+                  "Housing" : {"url": "hhh"},
+                  "Jobs": {"url": "jjj"},
+                  "For Sale": {"url": "sss"},
+                  "Gigs": {"url": "ggg"},
+                  "Services":{"url": "bbb"},
+                  "Personals":{"url": "ppp"},
+                  "Resumes":{"url": "res"}}
+    soup = scrape(url)
+    for k,v in categories.items():
+        s = str(soup.findAll(id=v['url']))
+        match = re.findall('<a href="/cgi-bin/personals.cgi\?category=(\w+)">([\w ]+)</a>', s)
+        if not match:
+            match = re.findall('<a href="(\w+)/">([\w /]+)<\/a>', s)
+        if match:
+            result = {}
+            for f in match:
+                result[string.capwords(f[1])] = f[0]
+            v["sections"] = result
+    return categories
+            
+            
+            
+        
+
 def getStates(url):
+    rename = {"dc" : "washington dc",
+              "mass" : "massachusetts",
+              "n carolina": "north carolina",
+              "n hampshire": "new hampshire",
+              "s carolina": "south carolina"}
     soup = scrape(url)
     result = {}
     match = re.findall('<a href="(http://geo.craigslist.org/iso/us/\w+)">([\w ]+)</a>', str(soup))
     for f in match:
-        state = string.capwords(f[1])
+        state = f[1]
+        if state in rename.keys():
+            state = rename[state]
+        state = string.capwords(state)
         result[state] = getCities(f[0])
     return result
-        
+
 
 def getCities(url):
     soup = scrape(url)
@@ -44,7 +79,7 @@ def getCities(url):
     else:
         f = urllib.urlopen(url)
         return f.geturl()
-        
+
 def getAreas(url):
     soup = scrape(url)
     s = soup.findAll("span",{"class":"for"})
@@ -59,8 +94,9 @@ def getAreas(url):
         return result
     else:
         return url
-        
+
 def getNeighborhoods(url):
+    q = "hhh/"
     if url == "http://newyork.craigslist.org/mnh/":
         return url
     if not re.match("sfbay", url):
@@ -77,7 +113,6 @@ def getNeighborhoods(url):
             result[string.capwords(place)] = value 
     result["all"] = url
     return result
-    
     
         
 
