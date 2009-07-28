@@ -1,17 +1,6 @@
-from BeautifulSoup import BeautifulSoup
-import urllib
 import json
 
-class Location:
-    """A Fake Craigslist API"""
-    def __init__(self, city, nhood):
-        self.city = city
-        self.nhood = nhood
-
-    def serach(self, query):
-        return urllib.urlopen(query)
-
-class Map:
+class CraigsData:
     """
     A list of all the supported Craigslist areas
     state->city->area->neighborhood
