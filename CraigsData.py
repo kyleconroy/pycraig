@@ -668,6 +668,8 @@ class CraigsData:
                                                'Transport': 'trp',
                                                'Tv / Film / Video': 'tfr',
                                                'Web / Info Design': 'web',
-                                               'Writing / Editing': 'wri'}
+                                               'Writing / Editing': 'wri'},
+                                  'url' : 'jjj'},
+                           'Personals':{'sections':{}}}
     def json(self):
         return json.dumps(self.map)
