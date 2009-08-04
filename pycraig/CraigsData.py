@@ -6,6 +6,9 @@ class CraigsData:
     state->city->area->neighborhood
     """
     def __init__(self):
+        self.INT = 'INT'
+        self.VALUE = 'VALUE'
+        self.BOOL = 'BOOLEAN'
         self.map =  {
                     'Alabama': {'Auburn': 'http://auburn.craigslist.org/',
                                  'Birmingham': 'http://bham.craigslist.org/',
@@ -595,7 +598,7 @@ class CraigsData:
                                                     'Politics': 'pol',
                                                     'Rideshare': 'rid',
                                                     'Volunteers': 'vol'},
-                                       'url': 'ccc'},
+                                         'url': 'ccc'},
                          'For Sale': {'sections': {'Antiques': 'atq',
                                                    'Appliances': 'app',
                                                    'Auto Parts': 'pts',
@@ -625,18 +628,54 @@ class CraigsData:
                                                    'Tools': 'tls',
                                                    'Video Gaming': 'vgm',
                                                    'Wanted': 'wan'},
+                                      'params':[{'name':'min',
+                                                 'value':self.INT,
+                                                 'url':'minAsk={0}'.format(self.VALUE)},
+                                                {'name':'max',
+                                                 'value':self.INT,
+                                                 'url':'maxAsk={0}'.format(self.VALUE)}],
                                       'url': 'sss'},
-                         'Gigs': {'sections': {'Adult': 'adg'}, 'url': 'ggg'},
-                         'Housing': {'sections': {'Apts / Housing': 'apa',
+                         'Gigs': {'sections': {'Adult': 'adg',
+                                               'Computer': 'cpg',
+                                               'Creative':'crg',
+                                               'Crew':'cwg',
+                                               'Domestic':'dmg',
+                                               'Event':'evg',
+                                               'Labor':'lbg',
+                                               'Talent':'tlg',
+                                               'Writing':'wrg'},
+                                  'params':[{'name':'paid',
+                                             'value':self.BOOLEAN,
+                                             'url':['addThree=forpay','addThree=nopay']}],
+                                  'url': 'ggg'},
+                         'Housing': {'sections': {'Apartments': 'apa',
                                                   'Housing': 'hhh',
-                                                  'Housing Swap': 'swp',
-                                                  'Housing Wanted': 'hsw',
-                                                  'Office / Commercial': 'off',
-                                                  'Parking / Storage': 'prk',
+                                                  'Swap': 'swp',
+                                                  'Wanted': 'hsw',
+                                                  'Office': 'off',
+                                                  'Commercial': 'off',
+                                                  'Storage': 'prk',
+                                                  'Parking': 'prk',
                                                   'Real Estate For Sale': 'rea',
-                                                  'Rooms / Shared': 'roo',
-                                                  'Sublets / Temporary': 'sub',
+                                                  'Shared Rooms': 'roo',
+                                                  'Sublets': 'sub',
+                                                  'Temporary': 'sub',
                                                   'Vacation Rentals': 'vac'},
+                                     'params':[{'name':'min',
+                                                'value':self.INT,
+                                                'url':'minAsk={0}'.format(self.VALUE)},
+                                               {'name':'max',
+                                                'value':self.INT,
+                                                'url':'maxAsk={0}'.format(self.VALUE)},
+                                               {'name':'bedfooms',
+                                                'value':self.INT,
+                                                'url':'bedrooms={0}'.format(self.VALUE)},
+                                               {'name':'cats',
+                                                'value':self.BOOLEAN,
+                                                'url':'addTwo=purrr'},
+                                               {'name':'dogs',
+                                                'value':self.BOOLEAN,
+                                                'url':'addThree=wooof'}],
                                      'url': 'hhh'},
                          'Jobs': {'sections': {'Admin / Office': 'ofc',
                                                'Arch / Engineering': 'egr',
@@ -669,7 +708,86 @@ class CraigsData:
                                                'Tv / Film / Video': 'tfr',
                                                'Web / Info Design': 'web',
                                                'Writing / Editing': 'wri'},
+                                  'params': [{'name':'telecommute',
+                                              'value':self.BOOELAN,
+                                              'url':'addOne=telecommuting'},
+                                             {'name':'contract',
+                                              'value':self.BOOLEAN,
+                                              'url':'addTwo=contract'},
+                                             {'name':'internship',
+                                              'value':self.BOOLEAN,
+                                              'url':'addThree=internship'},
+                                             {'name':'part-time',
+                                              'value':self.BOOLEAN,
+                                              'url':'addFour=part-time'},
+                                             {'name':'non-profit',
+                                              'value':self.BOOLEAN,
+                                              'url':'addFive=non-profit'}],
                                   'url' : 'jjj'},
-                           'Personals':{'sections':{}}}
+                           'Personals':{'sections':{'Misc Romance':'msr',
+                                                    'Casual Encounters': 'cas',
+                                                    'Missed Connections':'mis',
+                                                    'Stricly Platonic': 'stp',
+                                                    'Woman Seeking Woman': 'w4w',
+                                                    'Man Seeking Man': 'm4m',
+                                                    'Woman Seeking Man': 'w4m',
+                                                    'Man Seeking Woman': 'm4w'
+                                                    },
+                                        'params':{'name':'type',
+                                                  'value':['m4w', 'm4m', 'w4m', 'w4w',
+                                                           't4m', 'm4t', 'mw4mw',
+                                                           'mw4w','mw4w', 'w4mw',
+                                                           'w4ww','m4mm', 'mm4m',
+                                                           'ww4w', 'ww4m', 'mm4w',
+                                                           'm4ww', 'w4mm', 't4wm',
+                                                           'mw4t'],
+                                                  'url':'query={0}'.format(self.VALUE)
+                                                  },
+                                  'url' : 'ppp'},
+                           'Services':{'sections':{'Beauty': 'bts',
+                                                    'Computer': 'cps',
+                                                    'Creative': 'crs',
+                                                    'Event': 'evs',
+                                                    'Financial': 'fns',
+                                                    'Legal': 'lgs',
+                                                    'Lessons': 'lss',
+                                                    'Pet': 'pas',
+                                                    'Automotive': 'aos',
+                                                    'Farm': 'fgs',
+                                                    'Garden': 'fgs',
+                                                    'Household': 'hss',
+                                                    'Labor': 'lbs',
+                                                    'Skilled Trade': 'sks',
+                                                    'Real Estate': 'rts',
+                                                    'Small Biz Ads': 'biz',
+                                                    'Therapeutic': 'thp',
+                                                    'Travel': 'trv',
+                                                    'Vacation':'trv',
+                                                    'Write': 'wet',
+                                                    'Editorial':'wet'},
+                                       'url':'bbb'}}
+
+    def url(self, state, city, section, **kwargs):
+        """Returns the proper search url for the query"""
+        
+
+    def cityUrl(self, state, city):
+        """Returns the proper url for the city
+           False otherwise"""
+        if state not in self.map.keys():
+            return false
+        if state is not dict:
+            return self.map[state]
+        if city not in self.map[state].keys():
+            return false
+        selected = self.map[state][city]
+        if selected is dict:
+            return selected['all']
+        else:
+            return selected
+        
+        
+        
+
     def json(self):
         return json.dumps(self.map)
